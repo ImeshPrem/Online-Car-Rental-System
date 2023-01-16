@@ -1,0 +1,30 @@
+<?php
+
+$card_type = $_POST['card_type'];
+
+$Card_Number = $_POST['Card_Number'];
+
+$cvv = $_POST['cvv'];
+
+$months = $_POST['months'];
+
+$years = $_POST['years'];
+
+
+//DataBase Connection
+$conn = new mysqli('loaclhost','root','test');
+if($conn->connect_error){
+die('Connection Failed : '.$conn->connect_error);
+}else{
+$stmt = $conn->prepare("insert into invoice(card_type,Card_Number,cvv,months,years)
+values(?,?,?,?,?)");
+$stmt->bind_param("siiss",$card_type,$Card_Number,$cvv,$months,$years);
+$stmt->execute();
+echo "Payment Successfully";
+$stmt->close();
+$conn->close();
+}
+
+}
+
+?>
